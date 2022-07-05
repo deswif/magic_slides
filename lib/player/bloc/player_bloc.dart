@@ -22,6 +22,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     PlayerStarted event,
     Emitter<PlayerState> emit,
   ) async {
+    await Future.delayed(Duration(seconds: 1));
     print('player Started');
     final _models = <Assets>[];
     print(_models);

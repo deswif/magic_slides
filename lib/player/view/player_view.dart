@@ -26,41 +26,51 @@ class PlayerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: BlocBuilder<PlayerBloc, PlayerState>(
-          builder: (context, state) {
-            if (state is NextAsset) {
-              print('VIEW asset ${context.read<PlayerBloc>().currentIndex}');
-              return GestureDetector(
+      backgroundColor: Colors.black,
+      body: BlocBuilder<PlayerBloc, PlayerState>(
+        builder: (context, state) {
+          if (state is NextAsset) {
+            print('VIEW asset ${context.read<PlayerBloc>().currentIndex}');
+            return Center(
+              child: GestureDetector(
                 onTap: () {
                   context.read<PlayerBloc>().add(AssetSwitched());
                 },
-                child: IndexedStack(
-                  index: context.read<PlayerBloc>().currentIndex,
-                  children: getWidgets(context),
+                child: Stack(
+                  children: [
+                    IndexedStack(
+                      alignment: Alignment.center,
+                      index: context.read<PlayerBloc>().currentIndex,
+                      children: getWidgets(context),
+                    ),
+                    Container(
+                      height: 38,
+                      color: Colors.black,
+                    )
+                  ],
+                ),
+              ),
+            );
+          } else if (state is PlayerEnd) {
+            print('VIEW player ended');
+            Future.delayed(Duration.zero, () async {
+              await Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => const HomePage(),
                 ),
               );
-            } else if (state is PlayerEnd) {
-              print('VIEW player ended');
-              Future.delayed(Duration.zero, () async {
-                await Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const HomePage(),
-                  ),
-                );
-              });
-              return const SizedBox();
-            } else if (state is PlayerInitial) {
-              print('VIEW Player started');
-              context.read<PlayerBloc>().add(PlayerStarted());
-              return const CircularProgressIndicator();
-            } else {
-              print('nothing');
-              return const SizedBox();
-            }
-          },
-        ),
+            });
+            return const SizedBox();
+          } else if (state is PlayerInitial) {
+            print('VIEW Player started');
+            context.read<PlayerBloc>().add(PlayerStarted());
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            print('nothing');
+            return const SizedBox();
+          }
+        },
       ),
     );
   }
@@ -74,11 +84,15 @@ class PlayerView extends StatelessWidget {
     for (final asset in assets) {
       if (asset is ImageModel) {
         widgets.add(
-          Image.file(asset.imageFile),
+          Image.file(
+            asset.imageFile,
+          ),
         );
       } else if (asset is VideoModel) {
         widgets.add(
-          VideoPlayer(asset.controller),
+          AspectRatio(
+              aspectRatio: asset.controller.value.aspectRatio,
+              child: VideoPlayer(asset.controller)),
         );
       }
     }
