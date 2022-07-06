@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magic_slides/home/view/home_page.dart';
@@ -65,7 +66,7 @@ class PlayerView extends StatelessWidget {
           } else if (state is PlayerInitial) {
             print('VIEW Player started');
             context.read<PlayerBloc>().add(PlayerStarted());
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CupertinoActivityIndicator());
           } else {
             print('nothing');
             return const SizedBox();
@@ -91,8 +92,9 @@ class PlayerView extends StatelessWidget {
       } else if (asset is VideoModel) {
         widgets.add(
           AspectRatio(
-              aspectRatio: asset.controller.value.aspectRatio,
-              child: VideoPlayer(asset.controller)),
+            aspectRatio: asset.controller.value.aspectRatio,
+            child: VideoPlayer(asset.controller),
+          ),
         );
       }
     }
