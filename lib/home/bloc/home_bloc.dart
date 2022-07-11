@@ -28,7 +28,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   void _onMagicTapClicked(HomeEvent event, Emitter<HomeState> emit) {
-    emit(HomeImagePick());
+    emit(MagicTapEditor());
   }
 
   void _onAssetsPicked(AssetsPicked event, Emitter<HomeState> emit) {

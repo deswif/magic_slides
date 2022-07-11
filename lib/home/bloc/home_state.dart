@@ -17,4 +17,4 @@ class HomeSuccessAssetsPick extends HomeState {
   final List<AssetEntity> result;
 }
 
-class HomeImagePick extends HomeState {}
+class MagicTapEditor extends HomeState {}

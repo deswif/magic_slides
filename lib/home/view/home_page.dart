@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magic_slides/app/app.dart';
 import 'package:magic_slides/home/bloc/home_bloc.dart';
 import 'package:magic_slides/home/widgets/widgets.dart';
-import 'package:magic_slides/player/view/player_view.dart';
+import 'package:magic_slides/magic_tap_editor/view/view.dart';
+import 'package:magic_slides/slideshow_player/view/player_view.dart';
 import 'package:magic_slides/theme/theme.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
@@ -36,6 +37,13 @@ class HomeView extends StatelessWidget {
               context,
               MaterialPageRoute<void>(
                 builder: (_) => PlayerPage(assets: state.result),
+              ),
+            );
+          } else if (state is MagicTapEditor) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute<void>(
+                builder: (_) => const MagicTapEditorPage(),
               ),
             );
           }

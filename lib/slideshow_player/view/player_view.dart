@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magic_slides/home/view/home_page.dart';
-import 'package:magic_slides/player/bloc/player_bloc.dart';
-import 'package:magic_slides/player/models/assets_model.dart';
+import 'package:magic_slides/slideshow_player/bloc/player_bloc.dart';
+import 'package:magic_slides/slideshow_player/models/assets_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
@@ -53,7 +53,7 @@ class PlayerView extends StatelessWidget {
               ),
             );
           } else if (state is PlayerEnd) {
-            print('VIEW player ended');
+            print('VIEW slideshow_player ended');
             Future.delayed(Duration.zero, () async {
               await Navigator.pushReplacement(
                 context,
@@ -66,7 +66,9 @@ class PlayerView extends StatelessWidget {
           } else if (state is PlayerInitial) {
             print('VIEW Player started');
             context.read<PlayerBloc>().add(PlayerStarted());
-            return const Center(child: CupertinoActivityIndicator());
+            return const Center(child: CupertinoActivityIndicator(
+              color: Colors.white,
+            ));
           } else {
             print('nothing');
             return const SizedBox();

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:magic_slides/player/models/assets_model.dart';
+import 'package:magic_slides/slideshow_player/models/assets_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
@@ -22,7 +22,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     PlayerStarted event,
     Emitter<PlayerState> emit,
   ) async {
-    print('player Started');
+    print('slideshow_player Started');
     final _models = <Assets>[];
     print(_models);
     for (final asset in assets) {
@@ -55,7 +55,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     print(currentIndex);
     if (currentIndex == models.length) {
-      print('player ended');
+      print('slideshow_player ended');
       emit(PlayerEnd());
     } else {
       final model = models[currentIndex];
