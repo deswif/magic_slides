@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -13,6 +15,7 @@ class MagicTapEditorBloc
   }
 
   late String _name;
+  late List<File> pngList;
 
   void _onMagicTapEditorClosed(
     MagicTapEditorClosed event,
@@ -22,10 +25,9 @@ class MagicTapEditorBloc
   }
 
   void _onNameChanged(
-      NameChanged event,
-      Emitter<MagicTapEditorState> emit,
-      ) {
+    NameChanged event,
+    Emitter<MagicTapEditorState> emit,
+  ) {
     _name = event.name;
-    print(_name);
   }
 }

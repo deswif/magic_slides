@@ -18,7 +18,7 @@ class CustomCard extends StatelessWidget {
             color: Colors.black.withOpacity(0.3),
             offset: const Offset(2, 3),
             spreadRadius: 1,
-            blurRadius: 1
+            blurRadius: 1,
           )
         ],
       ),

@@ -9,10 +9,10 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Text(
-          message,
-          style: Theme.of(context).textTheme.input,
-        )
+      child: Text(
+        message,
+        style: Theme.of(context).textTheme.input,
+      ),
     );
   }
 }

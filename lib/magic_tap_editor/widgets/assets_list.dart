@@ -1,20 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:magic_slides/magic_tap_editor/widgets/custom_card.dart';
 import 'package:magic_slides/magic_tap_editor/widgets/png_card.dart';
 
-class PNGList extends StatelessWidget {
-  const PNGList({super.key});
+class AssetsList extends StatelessWidget {
+  const AssetsList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        canvasColor: Colors.transparent,
-        shadowColor: Colors.black.withOpacity(0.3),
-      ),
-      child: ReorderableListView(
-        onReorder: (int oldIndex, int newIndex) {},
-        children: _widgets(context),
-      ),
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 30),
+          child: Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 30),
+                child: CustomCard(),
+              ),
+              const SizedBox(
+                width: 50,
+              ),
+              SizedBox(
+                height: 66,
+                width: 166,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Pick background',
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        Column(
+          children: _widgets(context),
+        )
+      ],
     );
   }
 

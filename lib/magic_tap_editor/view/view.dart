@@ -39,34 +39,7 @@ class MagicTapEditorView extends StatelessWidget {
             children: [
               LeadPart(),
               const SizedBox(height: 50),
-              Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 30),
-                    child: CustomCard(),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  SizedBox(
-                    height: 66,
-                    width: 166,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Pick background',
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 60,
-              ),
-              const Expanded(
-                child: PNGList(),
-              ),
+              const Expanded(child: AssetsList()),
             ],
           ),
         ),

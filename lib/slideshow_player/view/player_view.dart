@@ -66,9 +66,11 @@ class PlayerView extends StatelessWidget {
           } else if (state is PlayerInitial) {
             print('VIEW Player started');
             context.read<PlayerBloc>().add(PlayerStarted());
-            return const Center(child: CupertinoActivityIndicator(
-              color: Colors.white,
-            ));
+            return const Center(
+              child: CupertinoActivityIndicator(
+                color: Colors.white,
+              ),
+            );
           } else {
             print('nothing');
             return const SizedBox();
