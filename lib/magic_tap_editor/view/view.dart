@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magic_slides/home/view/home_page.dart';
 import 'package:magic_slides/magic_tap_editor/bloc/magic_tap_editor_bloc.dart';
 import 'package:magic_slides/magic_tap_editor/widgets/widgets.dart';
+import 'package:magic_slides/magic_tap_player/magic_tap_player.dart';
 import 'package:magic_slides/theme/theme.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
@@ -57,6 +58,16 @@ class MagicTapEditorView extends StatelessWidget {
             context
                 .read<MagicTapEditorBloc>()
                 .add(MagicTapBackgroundPicked(background: background));
+          } else if (state is MagicTapPlayer) {
+            await Navigator.pushReplacement(
+              context,
+              MaterialPageRoute<void>(
+                builder: (context) => MagicTapPlayerPage(
+                  background: state.background,
+                  pngs: state.pngs,
+                ),
+              ),
+            );
           }
         },
         child: Padding(

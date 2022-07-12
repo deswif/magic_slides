@@ -96,6 +96,7 @@ class LeadPart extends StatelessWidget {
               context.read<MagicTapEditorBloc>().add(
                     NameChanged(name: _controller.text.trim()),
                   );
+              context.read<MagicTapEditorBloc>().add(MagicTapPlayerStarted());
             }
           },
           icon: SvgPicture.asset('assets/icons/done.svg'),

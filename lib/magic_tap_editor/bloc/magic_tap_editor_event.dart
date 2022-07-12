@@ -41,3 +41,5 @@ class NameChanged extends MagicTapEditorEvent {
 
   final String name;
 }
+
+class MagicTapPlayerStarted extends MagicTapEditorEvent {}

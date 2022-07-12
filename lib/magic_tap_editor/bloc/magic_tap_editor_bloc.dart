@@ -19,6 +19,7 @@ class MagicTapEditorBloc
     on<MagicTapPNGRemoved>(_onRemoved);
     on<MagicTapEditorClosed>(_onMagicTapEditorClosed);
     on<NameChanged>(_onNameChanged);
+    on<MagicTapPlayerStarted>(_onPlayerStarted);
   }
 
   late String _name;
@@ -96,5 +97,18 @@ class MagicTapEditorBloc
     Emitter<MagicTapEditorState> emit,
   ) {
     _name = event.name;
+  }
+
+  void _onPlayerStarted(
+    MagicTapPlayerStarted event,
+    Emitter<MagicTapEditorState> emit,
+  ) {
+    final result = <File>[];
+    for (final png in pngList) {
+      if (png != null) {
+        result.add(png);
+      }
+    }
+    emit(MagicTapPlayer(background: background!, pngs: result));
   }
 }

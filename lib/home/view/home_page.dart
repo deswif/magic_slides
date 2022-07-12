@@ -36,7 +36,7 @@ class HomeView extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute<void>(
-                builder: (_) => PlayerPage(assets: state.result),
+                builder: (_) => SlideshowPlayerPage(assets: state.result),
               ),
             );
           } else if (state is MagicTapEditor) {

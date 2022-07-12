@@ -21,3 +21,10 @@ class NewList extends MagicTapEditorState {
   final File? background;
   final List<File?> pngs;
 }
+
+class MagicTapPlayer extends MagicTapEditorState {
+  MagicTapPlayer({required this.background, required this.pngs});
+
+  final File background;
+  final List<File> pngs;
+}

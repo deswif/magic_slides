@@ -4,14 +4,15 @@ import 'package:magic_slides/slideshow_player/models/assets_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-part 'player_event.dart';
+part 'slideshow_player_event.dart';
 
-part 'player_state.dart';
+part 'slideshow_player_state.dart';
 
-class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
-  PlayerBloc(this.assets) : super(PlayerInitial()) {
-    on<PlayerStarted>(_onPlayerStarted);
-    on<AssetSwitched>(_onAssetSwitched);
+class SlideshowPlayerBloc
+    extends Bloc<SlideshowPlayerEvent, SlideshowPlayerState> {
+  SlideshowPlayerBloc(this.assets) : super(SlideshowPlayerInitial()) {
+    on<SlideshowPlayerStarted>(_onPlayerStarted);
+    on<SlideshowAssetSwitched>(_onAssetSwitched);
   }
 
   final List<AssetEntity> assets;
@@ -19,8 +20,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   int currentIndex = 0;
 
   Future<void> _onPlayerStarted(
-    PlayerStarted event,
-    Emitter<PlayerState> emit,
+    SlideshowPlayerStarted event,
+    Emitter<SlideshowPlayerState> emit,
   ) async {
     final _models = <Assets>[];
     for (final asset in assets) {
@@ -42,20 +43,23 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     if (firstAsset is VideoModel) {
       await firstAsset.controller.play();
     }
-    emit(NextAsset());
+    emit(SlideshowNextAsset());
   }
 
-  void _onAssetSwitched(AssetSwitched event, Emitter<PlayerState> emit) {
+  void _onAssetSwitched(
+    SlideshowAssetSwitched event,
+    Emitter<SlideshowPlayerState> emit,
+  ) {
     currentIndex++;
 
     if (currentIndex == models.length) {
-      emit(PlayerEnd());
+      emit(SlideshowPlayerEnd());
     } else {
       final model = models[currentIndex];
       if (model is VideoModel) {
         model.controller.play();
       }
-      emit(NextAsset());
+      emit(SlideshowNextAsset());
     }
   }
 }
