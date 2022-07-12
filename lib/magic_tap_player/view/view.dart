@@ -32,15 +32,17 @@ class MagicTapPlayerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: BlocBuilder<MagicTapPlayerBloc, MagicTapPlayerState>(
         builder: (context, state) {
           if (state is MagicTapNextPNG) {
-            return Center(
-              child: GestureDetector(
-                onTap: () => context.read<MagicTapPlayerBloc>().add(
-                      MagicTapPNGSwitched(),
-                    ),
+            return GestureDetector(
+              onTap: () => context.read<MagicTapPlayerBloc>().add(
+                    MagicTapPNGSwitched(),
+                  ),
+              child: Container(
+                color: Colors.black,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
                 child: Stack(
                   children: [
                     Center(

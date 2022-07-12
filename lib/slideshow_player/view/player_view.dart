@@ -27,7 +27,6 @@ class SlideshowPlayerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: BlocBuilder<SlideshowPlayerBloc, SlideshowPlayerState>(
         builder: (context, state) {
           if (state is SlideshowNextAsset) {
@@ -38,18 +37,25 @@ class SlideshowPlayerView extends StatelessWidget {
                       .read<SlideshowPlayerBloc>()
                       .add(SlideshowAssetSwitched());
                 },
-                child: Stack(
-                  children: [
-                    IndexedStack(
-                      alignment: Alignment.center,
-                      index: context.read<SlideshowPlayerBloc>().currentIndex,
-                      children: getWidgets(context),
-                    ),
-                    Container(
-                      height: 38,
-                      color: Colors.black,
-                    )
-                  ],
+                child: Container(
+                  color: Colors.black,
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: IndexedStack(
+                          alignment: Alignment.center,
+                          index: context.read<SlideshowPlayerBloc>().currentIndex,
+                          children: getWidgets(context),
+                        ),
+                      ),
+                      Container(
+                        height: 38,
+                        color: Colors.black,
+                      )
+                    ],
+                  ),
                 ),
               ),
             );
