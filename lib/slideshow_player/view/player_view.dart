@@ -31,7 +31,6 @@ class PlayerView extends StatelessWidget {
       body: BlocBuilder<PlayerBloc, PlayerState>(
         builder: (context, state) {
           if (state is NextAsset) {
-            print('VIEW asset ${context.read<PlayerBloc>().currentIndex}');
             return Center(
               child: GestureDetector(
                 onTap: () {
@@ -53,7 +52,6 @@ class PlayerView extends StatelessWidget {
               ),
             );
           } else if (state is PlayerEnd) {
-            print('VIEW slideshow_player ended');
             Future.delayed(Duration.zero, () async {
               await Navigator.pushReplacement(
                 context,
@@ -64,7 +62,6 @@ class PlayerView extends StatelessWidget {
             });
             return const SizedBox();
           } else if (state is PlayerInitial) {
-            print('VIEW Player started');
             context.read<PlayerBloc>().add(PlayerStarted());
             return const Center(
               child: CupertinoActivityIndicator(
@@ -72,7 +69,6 @@ class PlayerView extends StatelessWidget {
               ),
             );
           } else {
-            print('nothing');
             return const SizedBox();
           }
         },
@@ -81,8 +77,6 @@ class PlayerView extends StatelessWidget {
   }
 
   List<Widget> getWidgets(BuildContext context) {
-    print('VIEW getting widgets');
-
     final widgets = <Widget>[];
     final assets = context.read<PlayerBloc>().models;
 

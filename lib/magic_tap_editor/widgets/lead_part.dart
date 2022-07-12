@@ -66,7 +66,26 @@ class LeadPart extends StatelessWidget {
           splashRadius: 20,
           padding: EdgeInsets.zero,
           onPressed: () {
-            if (_controller.text.trim() == '') {
+            if (!isBackgroundValid(context)) {
+              showDialog<void>(
+                context: context,
+                builder: (context) {
+                  return const ErrorDialog(
+                    message: "Background can't be empty",
+                  );
+                },
+              );
+            } else if (!isPNGsValid(context)) {
+              showDialog<void>(
+                context: context,
+                builder: (context) {
+                  return const ErrorDialog(
+                    message:
+                        'All PNGs must be filled. Minimal amount of PNGs is 2',
+                  );
+                },
+              );
+            } else if (_controller.text.trim() == '') {
               showDialog<void>(
                 context: context,
                 builder: (context) {
@@ -75,7 +94,7 @@ class LeadPart extends StatelessWidget {
               );
             } else {
               context.read<MagicTapEditorBloc>().add(
-                    NameChanged(_controller.text.trim()),
+                    NameChanged(name: _controller.text.trim()),
                   );
             }
           },
@@ -83,5 +102,25 @@ class LeadPart extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  bool isBackgroundValid(BuildContext context) {
+    final bg = context.read<MagicTapEditorBloc>().background;
+    return bg != null;
+  }
+
+  bool isPNGsValid(BuildContext context) {
+    final pngs = context.read<MagicTapEditorBloc>().pngList;
+
+    if (pngs.length < 2) return false;
+
+    var valid = true;
+    for (final png in pngs) {
+      if (png == null) {
+        valid = false;
+        break;
+      }
+    }
+    return valid;
   }
 }

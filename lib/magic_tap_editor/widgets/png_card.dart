@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magic_slides/magic_tap_editor/bloc/magic_tap_editor_bloc.dart';
 import 'package:magic_slides/magic_tap_editor/widgets/widgets.dart';
 import 'package:magic_slides/theme/theme.dart';
 
@@ -6,8 +10,10 @@ class PNGCard extends StatelessWidget {
   const PNGCard({
     super.key,
     required this.index,
+    required this.png,
   });
 
+  final File? png;
   final int index;
 
   @override
@@ -18,18 +24,33 @@ class PNGCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            width: 15,
+            width: 25,
             child: Text(
-              index.toString(),
+              (index + 1).toString(),
               style: Theme.of(context).textTheme.title,
             ),
           ),
-          const CustomCard(),
+          CustomCard(
+            child: Builder(
+              builder: (context) {
+                final png = this.png;
+                if (png != null) {
+                  return Image.file(png);
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+          ),
           SizedBox(
             height: 66,
             width: 136,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                context
+                    .read<MagicTapEditorBloc>()
+                    .add(MagicTapPickPNGTapped(index: index));
+              },
               child: Text(
                 'Pick PNG',
                 style: Theme.of(context).textTheme.button,
@@ -38,7 +59,14 @@ class PNGCard extends StatelessWidget {
           ),
           SizedBox(
             width: 40,
-            child: ElevatedButton(onPressed: () {}, child: const Text('-')),
+            child: ElevatedButton(
+              onPressed: () {
+                context
+                    .read<MagicTapEditorBloc>()
+                    .add(MagicTapPNGRemoved(index: index));
+              },
+              child: const Text('-'),
+            ),
           )
         ],
       ),

@@ -22,26 +22,21 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     PlayerStarted event,
     Emitter<PlayerState> emit,
   ) async {
-    print('slideshow_player Started');
     final _models = <Assets>[];
-    print(_models);
     for (final asset in assets) {
       if (asset.type == AssetType.image) {
         final file = await asset.file;
         _models.add(ImageModel(imageFile: file!));
-        print('image added');
       } else if (asset.type == AssetType.video) {
         final file = await asset.file;
         final _controller = VideoPlayerController.file(file!);
         await _controller.setVolume(0);
         await _controller.initialize();
         _models.add(VideoModel(controller: _controller));
-        print('video added');
       }
     }
 
     models = _models;
-    print('first asset');
     await Future<void>.delayed(const Duration(seconds: 2));
     final firstAsset = models[0];
     if (firstAsset is VideoModel) {
@@ -53,17 +48,13 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   void _onAssetSwitched(AssetSwitched event, Emitter<PlayerState> emit) {
     currentIndex++;
 
-    print(currentIndex);
     if (currentIndex == models.length) {
-      print('slideshow_player ended');
       emit(PlayerEnd());
     } else {
       final model = models[currentIndex];
       if (model is VideoModel) {
-        print('video started');
         model.controller.play();
       }
-      print('new asset $currentIndex');
       emit(NextAsset());
     }
   }

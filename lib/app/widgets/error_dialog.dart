@@ -8,10 +8,14 @@ class ErrorDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        message,
-        style: Theme.of(context).textTheme.input,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Center(
+        child: Text(
+          message,
+          style: Theme.of(context).textTheme.input,
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
