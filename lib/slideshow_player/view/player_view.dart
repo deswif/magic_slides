@@ -2,15 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magic_slides/home/view/home_page.dart';
+import 'package:magic_slides/slideshow_editor/models/assets_model.dart';
 import 'package:magic_slides/slideshow_player/bloc/slideshow_player_bloc.dart';
-import 'package:magic_slides/slideshow_player/models/assets_model.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class SlideshowPlayerPage extends StatelessWidget {
   const SlideshowPlayerPage({super.key, required this.assets});
 
-  final List<AssetEntity> assets;
+  final List<Assets> assets;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +86,7 @@ class SlideshowPlayerView extends StatelessWidget {
 
   List<Widget> getWidgets(BuildContext context) {
     final widgets = <Widget>[];
-    final assets = context.read<SlideshowPlayerBloc>().models;
+    final assets = context.read<SlideshowPlayerBloc>().assets;
 
     for (final asset in assets) {
       if (asset is ImageModel) {
