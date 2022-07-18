@@ -30,14 +30,15 @@ class SlideshowEditorView extends StatelessWidget {
           bottom: 80,
         ),
         child: Center(
-            child: Column(
-          children: [
-            LeadPart(),
-            const Expanded(
-              child: AssetsList(),
-            ),
-          ],
-        )),
+          child: Column(
+            children: [
+              LeadPart(),
+              const Expanded(
+                child: AssetsList(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

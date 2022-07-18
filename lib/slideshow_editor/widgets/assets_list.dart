@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:magic_slides/slideshow_editor/models/assets_model.dart';
 import 'package:magic_slides/slideshow_editor/slideshow_editor.dart';
 
 class AssetsList extends StatelessWidget {
@@ -15,16 +14,24 @@ class AssetsList extends StatelessWidget {
             shadowColor: Colors.transparent,
             canvasColor: Colors.transparent,
           ),
-          child: ReorderableListView(
+          child: ReorderableListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 23),
+            physics: const ClampingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            children: _getWidgets(
-              context,
-              context.read<SlideshowEditorBloc>().state.assets,
-            ),
+            itemCount: state.assets.length,
+            itemBuilder: (context, i) {
+              return BlocProvider.value(
+                key: ValueKey(state.assets[i]),
+                value: context.read<SlideshowEditorBloc>(),
+                child: AssetCard(
+                  asset: state.assets[i],
+                  index: i,
+                ),
+              );
+            },
             onReorder: (oldIndex, newIndex) {
-              newIndex -= 1;
-              print('$oldIndex $newIndex');
+              if (newIndex > oldIndex) newIndex--;
+
               context
                   .read<SlideshowEditorBloc>()
                   .add(AssetReordered(oldIndex, newIndex));
@@ -33,24 +40,5 @@ class AssetsList extends StatelessWidget {
         );
       },
     );
-  }
-
-  List<Widget> _getWidgets(BuildContext context, List<Assets> assets) {
-    final widgets = <Widget>[];
-
-    for (var i = 0; i < assets.length; i++) {
-      widgets.add(
-        BlocProvider.value(
-          key: ValueKey<int>(i),
-          value: context.read<SlideshowEditorBloc>(),
-          child: AssetCard(
-            asset: assets[i],
-            index: i,
-          ),
-        ),
-      );
-    }
-
-    return widgets;
   }
 }

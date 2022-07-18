@@ -35,7 +35,6 @@ class HomeView extends StatelessWidget {
           } else if (state is HomeAssetsPick) {
             await _showAssetsPicker(context);
           } else if (state is HomeSuccessAssetsPick) {
-
             final _models = <Assets>[];
             for (final asset in state.result) {
               if (asset.type == AssetType.image) {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_slides/slideshow_editor/models/assets_model.dart';
@@ -14,32 +16,41 @@ class SlideshowPlayerBloc
   }
 
   final List<Assets> assets;
-  int currentIndex = 0;
+  int currentIndex = -1;
 
   Future<void> _onPlayerStarted(
     SlideshowPlayerStarted event,
     Emitter<SlideshowPlayerState> emit,
   ) async {
-    await Future<void>.delayed(const Duration(seconds: 2));
-    final firstAsset = assets[0];
-    if (firstAsset is VideoModel) {
-      await firstAsset.controller.play();
-    }
-    emit(SlideshowNextAsset());
+    add(SlideshowAssetSwitched());
   }
 
-  void _onAssetSwitched(
+  Future<void> _onAssetSwitched(
     SlideshowAssetSwitched event,
     Emitter<SlideshowPlayerState> emit,
-  ) {
+  ) async {
     currentIndex++;
-
     if (currentIndex == assets.length) {
       emit(SlideshowPlayerEnd());
     } else {
       final model = assets[currentIndex];
       if (model is VideoModel) {
-        model.controller.play();
+        await model.controller.play();
+        if (model.autoNavigate) {
+          Future<void>.delayed(model.controller.value.duration, () {
+            if (currentIndex == assets.indexOf(model)) {
+              add(SlideshowAssetSwitched());
+            }
+          });
+        }
+      } else if (model is ImageModel) {
+        if (model.autoNavigate) {
+          Future<void>.delayed(Duration(seconds: model.duration), () {
+            if (currentIndex == assets.indexOf(model)) {
+              add(SlideshowAssetSwitched());
+            }
+          });
+        }
       }
       emit(SlideshowNextAsset());
     }

@@ -18,20 +18,26 @@ class SlideshowEditorBloc
     on<NameChanged>(_onNameChanged);
   }
 
-  void _onAssetRemoved(AssetRemoved event,
-      Emitter<SlideshowEditorState> emit,) {
+  void _onAssetRemoved(
+    AssetRemoved event,
+    Emitter<SlideshowEditorState> emit,
+  ) {
     final list = state.assets..removeAt(event.index);
     emit(state.copyWith(assets: list));
   }
 
-  void _onAutoNavigateChanged(AutoNavigateChanged event,
-      Emitter<SlideshowEditorState> emit,) {
+  void _onAutoNavigateChanged(
+    AutoNavigateChanged event,
+    Emitter<SlideshowEditorState> emit,
+  ) {
     final list = state.assets..[event.index].autoNavigate = event.auto;
     emit(state.copyWith(assets: list));
   }
 
-  void _onAutoNavigateDurationChanged(AutoNavigateDurationChanged event,
-      Emitter<SlideshowEditorState> emit,) {
+  void _onAutoNavigateDurationChanged(
+    AutoNavigateDurationChanged event,
+    Emitter<SlideshowEditorState> emit,
+  ) {
     final list = state.assets;
     final asset = list[event.index];
     if (asset is ImageModel) {
@@ -40,16 +46,21 @@ class SlideshowEditorBloc
     emit(state.copyWith(assets: list));
   }
 
-  void _onAssetReordered(AssetReordered event,
-      Emitter<SlideshowEditorState> emit,) {
+  void _onAssetReordered(
+    AssetReordered event,
+    Emitter<SlideshowEditorState> emit,
+  ) {
+    // ignore: prefer_final_locals
     var list = state.assets;
     final asset = list.removeAt(event.index);
     list.insert(event.newIndex, asset);
     emit(state.copyWith(assets: list));
   }
 
-  Future<void> _onVideoGestured(VideoGestured event,
-      Emitter<SlideshowEditorState> emit,) async {
+  Future<void> _onVideoGestured(
+    VideoGestured event,
+    Emitter<SlideshowEditorState> emit,
+  ) async {
     final list = state.assets;
     final video = list[event.index] as VideoModel;
     await video.controller.play();
@@ -57,8 +68,10 @@ class SlideshowEditorBloc
     // emit(state.copyWith(assets: list));
   }
 
-  void _onNameChanged(NameChanged event,
-      Emitter<SlideshowEditorState> emit,) {
+  void _onNameChanged(
+    NameChanged event,
+    Emitter<SlideshowEditorState> emit,
+  ) {
     emit(state.copyWith(name: event.name));
   }
 }

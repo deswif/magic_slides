@@ -47,7 +47,21 @@ class AssetCard extends StatelessWidget {
                             .add(VideoGestured(index)),
                         child: AspectRatio(
                           aspectRatio: asset.controller.value.aspectRatio,
-                          child: VideoPlayer(asset.controller),
+                          child: Stack(
+                            children: [
+                              VideoPlayer(asset.controller),
+                              const Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 5, right: 5),
+                                  child: Icon(
+                                    Icons.play_arrow_outlined,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     } else {

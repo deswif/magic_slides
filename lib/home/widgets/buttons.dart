@@ -28,7 +28,7 @@ class Buttons extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          'New Project',
+                          'New project',
                         ),
                         SvgPicture.asset('assets/icons/add.svg')
                       ],

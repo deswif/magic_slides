@@ -23,7 +23,7 @@ class NewProjectDialog extends StatelessWidget {
                   },
                   child: const Center(
                     child: Text(
-                      'Slide Show',
+                      'Slide show',
                     ),
                   ),
                 ),
@@ -39,7 +39,7 @@ class NewProjectDialog extends StatelessWidget {
                   },
                   child: const Center(
                     child: Text(
-                      'Magic Tap',
+                      'Magic tap',
                     ),
                   ),
                 ),
