@@ -3,7 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:magic_slides/app/widgets/error_dialog.dart';
-import 'package:magic_slides/magic_tap_editor/bloc/magic_tap_editor_bloc.dart';
+import 'package:magic_slides/home/view/home_page.dart';
+import 'package:magic_slides/magic_tap_editor/blocs/editor_bloc/magic_tap_editor_bloc.dart';
+import 'package:magic_slides/magic_tap_editor/models/png_model.dart';
+import 'package:magic_slides/magic_tap_player/view/view.dart';
 import 'package:magic_slides/theme/theme.dart';
 
 class LeadPart extends StatelessWidget {
@@ -37,8 +40,12 @@ class LeadPart extends StatelessWidget {
         IconButton(
           splashRadius: 20,
           padding: EdgeInsets.zero,
-          onPressed: () =>
-              context.read<MagicTapEditorBloc>().add(MagicTapEditorClosed()),
+          onPressed: () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute<void>(
+              builder: (_) => const HomePage(),
+            ),
+          ),
           icon: SvgPicture.asset('assets/icons/cross.svg'),
         ),
         SizedBox(
@@ -65,9 +72,9 @@ class LeadPart extends StatelessWidget {
         IconButton(
           splashRadius: 20,
           padding: EdgeInsets.zero,
-          onPressed: () {
+          onPressed: () async {
             if (!isBackgroundValid(context)) {
-              showDialog<void>(
+              await showDialog<void>(
                 context: context,
                 builder: (context) {
                   return const ErrorDialog(
@@ -76,7 +83,7 @@ class LeadPart extends StatelessWidget {
                 },
               );
             } else if (!isPNGsValid(context)) {
-              showDialog<void>(
+              await showDialog<void>(
                 context: context,
                 builder: (context) {
                   return const ErrorDialog(
@@ -86,7 +93,7 @@ class LeadPart extends StatelessWidget {
                 },
               );
             } else if (_controller.text.trim() == '') {
-              showDialog<void>(
+              await showDialog<void>(
                 context: context,
                 builder: (context) {
                   return const ErrorDialog(message: "Name can't be empty");
@@ -96,7 +103,25 @@ class LeadPart extends StatelessWidget {
               context.read<MagicTapEditorBloc>().add(
                     NameChanged(name: _controller.text.trim()),
                   );
-              context.read<MagicTapEditorBloc>().add(MagicTapPlayerStarted());
+              await Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (_) {
+                    final pngs = <Png>[];
+                    for (final png
+                        in context.read<MagicTapEditorBloc>().state.pngs) {
+                      if (png != null) {
+                        pngs.add(png);
+                      }
+                    }
+                    return MagicTapPlayerPage(
+                      background:
+                          context.read<MagicTapEditorBloc>().state.background!,
+                      pngs: pngs,
+                    );
+                  },
+                ),
+              );
             }
           },
           icon: SvgPicture.asset('assets/icons/done.svg'),
@@ -106,12 +131,12 @@ class LeadPart extends StatelessWidget {
   }
 
   bool isBackgroundValid(BuildContext context) {
-    final bg = context.read<MagicTapEditorBloc>().background;
+    final bg = context.read<MagicTapEditorBloc>().state.background;
     return bg != null;
   }
 
   bool isPNGsValid(BuildContext context) {
-    final pngs = context.read<MagicTapEditorBloc>().pngList;
+    final pngs = context.read<MagicTapEditorBloc>().state.pngs;
 
     if (pngs.length < 2) return false;
 

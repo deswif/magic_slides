@@ -46,7 +46,8 @@ class SlideshowPlayerView extends StatelessWidget {
                       Center(
                         child: IndexedStack(
                           alignment: Alignment.center,
-                          index: context.read<SlideshowPlayerBloc>().currentIndex,
+                          index:
+                              context.read<SlideshowPlayerBloc>().currentIndex,
                           children: getWidgets(context),
                         ),
                       ),

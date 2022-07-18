@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:magic_slides/magic_tap_editor/models/png_model.dart';
 import 'package:meta/meta.dart';
 
 part 'magic_tap_player_event.dart';
@@ -18,7 +19,7 @@ class MagicTapPlayerBloc
   }
 
   final File background;
-  final List<File> pngs;
+  final List<Png> pngs;
   int currentIndex = 0;
 
   void _onPlayerStarted(

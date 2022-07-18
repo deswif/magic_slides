@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magic_slides/home/view/home_page.dart';
+import 'package:magic_slides/magic_tap_editor/models/png_model.dart';
 import 'package:magic_slides/magic_tap_player/magic_tap_player.dart';
 
 class MagicTapPlayerPage extends StatelessWidget {
@@ -14,7 +15,7 @@ class MagicTapPlayerPage extends StatelessWidget {
   });
 
   final File background;
-  final List<File> pngs;
+  final List<Png> pngs;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +97,19 @@ class MagicTapPlayerView extends StatelessWidget {
 
     for (final png in pngs) {
       widgets.add(
-        Image.file(png),
+        Stack(
+          children: [
+            Positioned(
+              left: png.x - png.width / 2,
+              bottom: png.y - png.height / 2,
+              child: SizedBox(
+                height: png.height,
+                width: png.width,
+                child: Image.file(png.file),
+              ),
+            ),
+          ],
+        ),
       );
     }
 
