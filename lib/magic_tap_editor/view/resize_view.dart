@@ -115,10 +115,11 @@ class _ResizeViewState extends State<ResizeView> {
                         return Positioned(
                           left: state.png.x - scaledHalfWidth,
                           bottom: state.png.y - scaledHalfHeight,
-                          child: SizedBox(
+                          child: Image.file(
+                            state.png.file,
                             height: state.png.height * zoom,
                             width: state.png.width * zoom,
-                            child: Image.file(state.png.file),
+                            fit: BoxFit.contain,
                           ),
                         );
                       },
@@ -161,7 +162,7 @@ class _ResizeViewState extends State<ResizeView> {
   Widget _getBackground(BuildContext context) {
     final background = context.read<MagicTapEditorBloc>().state.background;
     if (background != null) {
-      return Image.file(background);
+      return Center(child: Image.file(background));
     }
 
     return const SizedBox();

@@ -74,6 +74,7 @@ class BottomAddButton extends StatelessWidget {
       } else if (entity[0].type == AssetType.video) {
         final controller = VideoPlayerController.file(file!);
         await controller.initialize();
+        await controller.setVolume(0);
         // ignore: use_build_context_synchronously
         context.read<SlideshowEditorBloc>().add(
               AssetAdded(

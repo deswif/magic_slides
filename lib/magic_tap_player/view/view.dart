@@ -102,10 +102,11 @@ class MagicTapPlayerView extends StatelessWidget {
             Positioned(
               left: png.x - png.width / 2,
               bottom: png.y - png.height / 2,
-              child: SizedBox(
+              child: Image.file(
+                png.file,
                 height: png.height,
                 width: png.width,
-                child: Image.file(png.file),
+                fit: BoxFit.contain,
               ),
             ),
           ],
