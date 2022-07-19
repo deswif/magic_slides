@@ -11,6 +11,7 @@ class SlideshowEditorBloc
   SlideshowEditorBloc(List<Assets> assets)
       : super(SlideshowEditorState(assets: assets)) {
     on<AssetRemoved>(_onAssetRemoved);
+    on<AssetAdded>(_onAssetAdded);
     on<AutoNavigateChanged>(_onAutoNavigateChanged);
     on<AutoNavigateDurationChanged>(_onAutoNavigateDurationChanged);
     on<AssetReordered>(_onAssetReordered);
@@ -23,6 +24,14 @@ class SlideshowEditorBloc
     Emitter<SlideshowEditorState> emit,
   ) {
     final list = state.assets..removeAt(event.index);
+    emit(state.copyWith(assets: list));
+  }
+
+  void _onAssetAdded(
+    AssetAdded event,
+    Emitter<SlideshowEditorState> emit,
+  ) {
+    final list = state.assets..add(event.asset);
     emit(state.copyWith(assets: list));
   }
 

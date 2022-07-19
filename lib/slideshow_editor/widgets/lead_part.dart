@@ -75,7 +75,16 @@ class LeadPart extends StatelessWidget {
             splashRadius: 20,
             padding: EdgeInsets.zero,
             onPressed: () async {
-              if (_controller.text.trim() == '') {
+              if (context.read<SlideshowEditorBloc>().state.assets.isEmpty) {
+                await showDialog<void>(
+                  context: context,
+                  builder: (context) {
+                    return const ErrorDialog(
+                      message: 'There must be at least 1 asset',
+                    );
+                  },
+                );
+              } else if (_controller.text.trim() == '') {
                 await showDialog<void>(
                   context: context,
                   builder: (context) {
@@ -93,6 +102,10 @@ class LeadPart extends StatelessWidget {
                       final assets = <Assets>[];
                       for (final asset
                           in context.read<SlideshowEditorBloc>().state.assets) {
+                        if (asset is VideoModel) {
+                          asset.controller.pause();
+                          asset.controller.seekTo(Duration.zero);
+                        }
                         assets.add(asset);
                       }
                       return SlideshowPlayerPage(

@@ -97,6 +97,7 @@ class AssetsList extends StatelessWidget {
       ),
     );
     final background = await assets?[0].originFile;
+    // ignore: use_build_context_synchronously
     context
         .read<MagicTapEditorBloc>()
         .add(MagicTapBackgroundPicked(background: background));

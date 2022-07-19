@@ -9,6 +9,12 @@ class AssetRemoved extends SlideshowEditorEvent {
   final int index;
 }
 
+class AssetAdded extends SlideshowEditorEvent {
+  AssetAdded(this.asset);
+
+  final Assets asset;
+}
+
 class AutoNavigateChanged extends SlideshowEditorEvent {
   AutoNavigateChanged({required this.index, required this.auto});
 

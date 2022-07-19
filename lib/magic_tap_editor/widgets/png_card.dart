@@ -107,8 +107,10 @@ class PNGCard extends StatelessWidget {
     final file = await assets?[0].originFile;
     Png? png;
     if (file != null) {
+      // ignore: use_build_context_synchronously
       png = await _createPng(context, file);
     }
+    // ignore: use_build_context_synchronously
     context
         .read<MagicTapEditorBloc>()
         .add(MagicTapPNGPicked(index: index, png: png));
