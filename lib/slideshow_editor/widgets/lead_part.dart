@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:magic_slides/app/widgets/error_dialog.dart';
 import 'package:magic_slides/home/view/home_page.dart';
-import 'package:magic_slides/slideshow_editor/models/assets_model.dart';
 import 'package:magic_slides/slideshow_editor/slideshow_editor.dart';
 import 'package:magic_slides/slideshow_player/view/player_view.dart';
 import 'package:magic_slides/theme/theme.dart';

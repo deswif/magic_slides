@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:magic_slides/slideshow_editor/models/assets_model.dart';
 import 'package:magic_slides/slideshow_editor/slideshow_editor.dart';
-import 'package:magic_slides/slideshow_editor/widgets/bottom_add_button.dart';
 
 class SlideshowEditorPage extends StatelessWidget {
   const SlideshowEditorPage({super.key, required this.assets});
